@@ -1,88 +1,80 @@
-# JobGuard
+JobGuard – Fake Job Posting Detection System
 
-JobGuard helps job seekers check whether a job posting or recruiter message is a scam. Paste a posting and get a risk score, the exact phrases that raised red flags, and advice on what to do next.
+**Check a job posting for scam signs before you reply.**
 
-## Features
-
-- Login and sign up
-- Scam analysis with a 0-100 risk score (Low, Medium, High)
-- Red-flag phrases highlighted in the original text
-- History of past checks
-- Scam reporting, plus an admin page to review reports
-
-## How It Works
-
-The final score combines two parts:
-
-- **Rule checks (60%)**: fees, bank or ID requests, unrealistic pay, urgency, chat-app-only contact, personal email addresses, missing company details
-- **ML text model (40%)**: a trained classifier that scores the posting text
-
-## Tech Stack
-
-| Part | Tech |
-|---|---|
-| Frontend | React, Vite, React Router |
-| Backend | Node.js, Express |
-| ML model | Python (text classifier) |
-| Database | MongoDB (change if different) |
+JobGuard is a project designed to help students and job seekers identify suspicious job postings. It checks job descriptions and recruiter messages for possible scam signs and provides a risk score, highlights suspicious phrases, and suggests what to do next.
 
 ## Project Structure
 
-```
-jobguard/
-├── jobguard-frontend/   # React app
-├── backend/             # Express API
-└── ml/                  # Model training and prediction
-```
+**frontend/** React + Vite application with login, signup, job checking, result and history pages.
 
-## Getting Started
+**backend/** Express API for authentication, job analysis, history, rate limiting and security headers.
 
-### 1. Frontend
+## Technologies Used
 
-```bash
-cd jobguard-frontend
-npm install
-npm run dev
-```
+**Frontend:** React.js, Vite
 
-Runs at http://localhost:5173. Without a backend it runs in demo mode (data saved in your browser).
+**Backend:** Node.js, Express.js
 
-To use the real API, create `jobguard-frontend/.env`:
+**Detection:** JavaScript Rule Engine and Naive Bayes Text Model
 
-```
-VITE_API_URL=http://localhost:5000
-```
+**Security:** Scrypt password hashing and signed login tokens
 
-### 2. Backend
+**Storage:** In-memory storage (data resets when the server restarts)
 
-```bash
-cd backend
-npm install
-npm start
-```
+## Features
 
-Runs at http://localhost:5000. Create a `.env` file with your database URL, JWT secret and admin key.
+**User Authentication:** Users can create an account and log in securely.
 
-### 3. ML model
+**Job Posting Analysis:** Checks job descriptions, recruiter emails and job links.
 
-```bash
-cd ml
-pip install -r requirements.txt
-python train.py
-```
+**Rule-Based Detection:** Looks for warning signs such as registration fees, bank or ID requests, unrealistic salaries, urgent hiring messages, personal email addresses and suspicious links.
+
+**Text Model:** Uses a small Naive Bayes model trained on sample genuine and scam job postings.
+
+**Risk Score:** Combines rule-based checks and text model predictions to generate a score between 0 and 100.
+
+**Risk Level:** Displays the result as Low, Medium or High.
+
+**Warning Highlights:** Highlights the exact words or phrases that trigger warnings.
+
+**Safety Recommendations:** Provides suggestions based on the warning signs found.
+
+**Analysis History:** Allows users to view their previous job checks.
+
+**User-Specific History:** Each user can access their own analysis history.
+
+**Demo Mode:** Allows users to explore the frontend without running the backend.
 
 ## API Endpoints
 
-| Method | Path | Purpose |
+| Method | Endpoint | Authentication |
 |---|---|---|
-| POST | `/api/auth/signup` | Create an account |
-| POST | `/api/auth/login` | Log in |
-| GET | `/api/auth/me` | Get the current user |
-| POST | `/api/analyze` | Analyze a posting |
-| GET | `/api/history` | List past checks |
-| GET | `/api/analysis/:id` | Get one result |
-| POST | `/api/report` | Report a scam |
-| GET | `/api/admin/reports` | List reports (admin) |
+| POST | `/api/auth/signup` | Not Required |
+| POST | `/api/auth/login` | Not Required |
+| GET | `/api/auth/me` | Required |
+| POST | `/api/analyze` | Required |
+| GET | `/api/history` | Required |
+| GET | `/api/analysis/:id` | Required |
+| GET | `/api/health` | Not Required |
+
+## Future Improvements
+
+**MongoDB Integration:** Store user accounts and analysis history permanently.
+
+**Machine Learning:** Improve the detection model for better results.
+
+**Report a Scam:** Allow users to report suspicious job postings.
+
+**Admin Panel:** Add admin functionality to review reported jobs.
+
+**Model Retraining:** Use admin-approved reports to improve the detection model.
+
+**Testing and Deployment:** Test the application and make it available online.
+
+## How JobGuard Helps
+
+JobGuard helps users become more aware of common recruitment scams. It highlights suspicious signs in job postings, explains why they may be risky, and provides suggestions to help users make safer decisions before responding to a job opportunity.
 | PATCH | `/api/admin/reports/:id` | Update report status (admin) |
 
 ## Disclaimer
