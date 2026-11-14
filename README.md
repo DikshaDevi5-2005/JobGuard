@@ -1,4 +1,4 @@
-JobGuard – Fake Job Posting Detection System
+## JobGuard – Fake Job Posting Detection System
 
 **Check a job posting for scam signs before you reply.**
 
